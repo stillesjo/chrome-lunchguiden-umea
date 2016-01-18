@@ -4,6 +4,8 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import inject from 'gulp-inject';
+import debug from 'gulp-debug';
 
 const $ = gulpLoadPlugins();
 
@@ -33,6 +35,13 @@ gulp.task('lint', lint('app/scripts.babel/**/*.js', {
     es6: true
   }
 }));
+
+gulp.task('inject', () => {
+   return gulp.src('./app/popup.html')
+   .pipe(inject(gulp.src('scripts/**/*.js', 
+   {cwd: 'app'}, { read: false }, {relative: true})))
+   .pipe(gulp.dest('./app')) 
+});
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
@@ -83,7 +92,9 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
+gulp.task('babel', ['babel-do', 'inject'])
+
+gulp.task('babel-do', () => {
   return gulp.src('app/scripts.babel/**/*.js')
       .pipe($.babel({
         presets: ['es2015']

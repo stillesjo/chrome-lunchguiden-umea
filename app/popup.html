@@ -10,16 +10,27 @@
     <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
-  <body>
-    <h1>'Allo, 'Allo!</h1>
+  <body ng-app="playground">
+      <a ui-sref="test">Test</a>
+      <a ui-sref="otherstate">Tes2t</a>
+    <div ui-view>
+    </div>
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js scripts/popup.js -->
-    <script src="scripts/popup.js"></script>
+    <!-- inject:js -->
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/background.js"></script>
+    <script src="/scripts/chromereload.js"></script>
+    <script src="/scripts/otherstate/otherstate.js"></script>
+    <script src="/scripts/test/test.js"></script>
+    <!-- endinject -->
     <!-- endbuild -->
   </body>
 </html>

@@ -15,7 +15,8 @@
     ]
   },
   "permissions": [
-    "background"
+    "background",
+    "activeTab"
   ],
   "page_action": {
     "default_icon": {
