@@ -16,7 +16,8 @@
   },
   "permissions": [
     "background",
-    "activeTab"
+    "activeTab",
+    "http://mega.vk.se/lunchguiden/export/lunchlist.php"
   ],
   "page_action": {
     "default_icon": {
@@ -25,5 +26,8 @@
     },
     "default_title": "temp",
     "default_popup": "popup.html"
-  }
+  },
+  "web_accessible_resources" :[
+      "scripts/**/*.html"
+  ]
 }
