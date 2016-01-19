@@ -6,6 +6,7 @@ import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
 import inject from 'gulp-inject';
 import debug from 'gulp-debug';
+import jade from 'gulp-jade';
 
 const $ = gulpLoadPlugins();
 
@@ -59,7 +60,16 @@ gulp.task('images', () => {
     .pipe(gulp.dest('dist/images'));
 });
 
-gulp.task('html',  () => {
+gulp.task('html', ['jade', 'html-do']);
+
+gulp.task('jade', () => {
+    gulp.src('app/scripts.babel/**/*.jade')
+    .pipe(debug())
+    .pipe(jade())
+    .pipe(gulp.dest('app/scripts/')) 
+});
+
+gulp.task('html-do',  () => {
   const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
   return gulp.src('app/*.html')
@@ -114,7 +124,8 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/styles/**/*',
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
-
+  
+  gulp.watch('app/scripts.babel/**/*.jade', ['html']);
   gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
   gulp.watch('bower.json', ['wiredep']);
 });
