@@ -1,2 +1,10 @@
-h2 Hej
-p(ng-repeat="lunch in restaurants.lunches" ng-bind="lunch.menu")
+md-toolbar
+  .md-toolbar-tools
+    span Umeå Lunchguiden
+    div(flex="100")
+    
+div(layout="row" layout-wrap)
+  md-card(flex="45" ng-repeat="lunch in restaurants.lunches")
+    md-subheader(ng-bind="lunch.restaurant.name")
+    md-card-content
+      p(ng-repeat="menu in lunch.menu | splitnewline track by $index" ng-bind="menu")

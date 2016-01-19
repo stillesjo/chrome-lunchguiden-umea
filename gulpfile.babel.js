@@ -41,7 +41,7 @@ gulp.task('inject', () => {
    return gulp.src('./app/popup.html')
    .pipe(inject(gulp.src('scripts/**/*.js', 
    {cwd: 'app'}, { read: false }, {relative: true})))
-   .pipe(gulp.dest('./app')) 
+   .pipe(gulp.dest('./app'));
 });
 
 gulp.task('images', () => {

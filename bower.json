@@ -5,7 +5,9 @@
   "dependencies": {
     "angular": "~1.4.8",
     "angular-ui-router": "ui-router#~0.2.15",
-    "angular-resource": "~1.4.8"
+    "angular-resource": "~1.4.8",
+    "angular-material": "~1.0.2",
+    "lodash": "~4.0.0"
   },
   "devDependencies": {
     "chai": "~3.4.2",
