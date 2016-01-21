@@ -1,12 +1,14 @@
 'use strict';
 angular.module('playground').config(function($stateProvider) {
     $stateProvider.state('test', {
-        url: '/',
+        url: '/?date',
+        // templateUrl: 'scripts/test/test.html',
         templateUrl: chrome.extension.getURL('scripts/test/test.html'),
         controller: TestController,
         resolve: {
-            restaurants: function(restaurant) {
-                return restaurant.get();
+            restaurants: function(restaurant, $stateParams) {
+              var date = $stateParams.date || new Date().toLocaleDateString();
+              return restaurant.get({datum: date});
             }
         }
     })
@@ -14,7 +16,19 @@ angular.module('playground').config(function($stateProvider) {
 
 
 /*@ngInject*/
-function TestController($scope, restaurants) {
-    console.log(restaurants);
-    $scope.restaurants = restaurants;
+function TestController($scope, restaurants, date, $stateParams, $state) {
+
+  $scope.restaurants = restaurants;
+  $scope.dates = date;
+  $scope.day = $stateParams.date || $scope.dates[0].date;
+  $scope.isSelected = isSelected;
+  $scope.dateChanged = dateChanged;
+  
+  function isSelected(date) {
+    return $scope.day === date;
+  }
+  
+  function dateChanged() {
+    $state.go('test', {date: $scope.day});
+  }
 }

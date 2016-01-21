@@ -1,10 +1,16 @@
 md-toolbar
   .md-toolbar-tools
-    span Umeå Lunchguiden
+    h2 Umeå Lunchguiden
     div(flex="100")
-    
-div(layout="row" layout-wrap)
-  md-card(flex="45" ng-repeat="lunch in restaurants.lunches")
-    md-subheader(ng-bind="lunch.restaurant.name")
-    md-card-content
-      p(ng-repeat="menu in lunch.menu | splitnewline track by $index" ng-bind="menu")
+    md-input-container
+      select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
+        option(ng-repeat="date in dates" value="{{date.date}}" ng-bind="date.day" ng-selected="isSelected(date.date)")
+md-content
+  md-input-container
+      label Filtrera
+      md-input(ng-model="searchText")
+  div(layout="row" layout-wrap)
+    md-card(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText")
+      md-subheader(ng-bind="lunch.restaurant.name")
+      md-card-content
+        p(ng-repeat="menu in lunch.menu | splitnewline track by $index" ng-bind="menu")
