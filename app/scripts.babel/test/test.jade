@@ -5,12 +5,14 @@ md-toolbar
     md-input-container
       select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
         option(ng-repeat="date in dates" value="{{date.date}}" ng-bind="date.day" ng-selected="isSelected(date.date)")
-md-content
+div(layout="column")
   md-input-container
-      label Filtrera
-      md-input(ng-model="searchText")
-  div(layout="row" layout-wrap)
-    md-card(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText")
-      md-subheader(ng-bind="lunch.restaurant.name")
-      md-card-content
-        p(ng-repeat="menu in lunch.menu | splitnewline track by $index" ng-bind="menu")
+      label Filtrera restaurang / mat
+      input(ng-model="searchText" type="text" autofocus)
+div(layout="row" layout-wrap)
+  md-card(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText")
+    md-card-title(layout="row" layout-align="center center")
+      md-card-media
+        img(ng-src="{{lunch.restaurant.logo}}")
+    md-card-content
+      p(ng-repeat="menu in lunch.menu | splitnewline track by $index" ng-bind="menu")
