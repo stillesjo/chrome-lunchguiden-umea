@@ -6,9 +6,9 @@ angular.module('playground').config(function($stateProvider) {
         templateUrl: chrome.extension.getURL('scripts/test/test.html'),
         controller: TestController,
         resolve: {
-            restaurants: function(restaurant, $stateParams) {
-              var date = $stateParams.date || new Date().toLocaleDateString();
-              return restaurant.get({datum: date});
+            restaurants: function(restaurant, $stateParams, date) {
+              var d = $stateParams.date || date[0].date;
+              return restaurant.get({datum: d});
             }
         }
     })
@@ -16,13 +16,14 @@ angular.module('playground').config(function($stateProvider) {
 
 
 /*@ngInject*/
-function TestController($scope, restaurants, date, $stateParams, $state) {
+function TestController($scope, $stateParams, $state, $mdDialog, restaurants, date) {
 
   $scope.restaurants = restaurants;
   $scope.dates = date;
   $scope.day = $stateParams.date || $scope.dates[0].date;
   $scope.isSelected = isSelected;
   $scope.dateChanged = dateChanged;
+  $scope.showLunchInfo = showLunchInfo;
   
   function isSelected(date) {
     return $scope.day === date;
@@ -30,5 +31,9 @@ function TestController($scope, restaurants, date, $stateParams, $state) {
   
   function dateChanged() {
     $state.go('test', {date: $scope.day});
+  }
+  
+  function showLunchInfo(lunch, event) {
+    $state.go('lunchinfo', {lunch: lunch});
   }
 }

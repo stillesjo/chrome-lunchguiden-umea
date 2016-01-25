@@ -4,13 +4,13 @@ md-toolbar
     div(flex="100")
     md-input-container
       select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
-        option(ng-repeat="date in dates" value="{{date.date}}" ng-bind="date.day" ng-selected="isSelected(date.date)")
+        option(ng-repeat="date in dates" value="{{date.date}}" ng-selected="isSelected(date.date)" ng-cloak) {{date.day}} ({{date.date}})
 div(layout="column")
   md-input-container
       label Filtrera restaurang / mat
       input(ng-model="searchText" type="text" autofocus)
 div(layout="row" layout-wrap)
-  md-card(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText")
+  md-card.md-whiteframe-5dp(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText" ng-click="showLunchInfo(lunch, $event)")
     md-card-title(layout="row" layout-align="center center")
       md-card-media
         img(ng-src="{{lunch.restaurant.logo}}")

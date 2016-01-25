@@ -7,6 +7,7 @@ import {stream as wiredep} from 'wiredep';
 import inject from 'gulp-inject';
 import debug from 'gulp-debug';
 import jade from 'gulp-jade';
+import { Server as karma } from 'karma';
 
 const $ = gulpLoadPlugins();
 
@@ -129,6 +130,23 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
   gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
   gulp.watch('bower.json', ['wiredep']);
 });
+
+gulp.task('inject-karma', () => {
+  gulp.src('./karma.conf.js')
+    .pipe(wiredep({
+      ignorePath: /^(\.\.\/)*\.\./,
+      dependencies: true,
+      devDependencies: true,
+    }))
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('test', ['lint', 'babel'], (done) => {
+  new karma({
+    configFile: __dirname('/karma.conf.js'),
+    singleRun: true
+  }, done).start();
+})
 
 gulp.task('size', () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
