@@ -4,7 +4,7 @@ md-toolbar
     div(flex="100")
     md-input-container
       select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
-        option(ng-repeat="date in dates" value="{{date.date}}" ng-selected="isSelected(date.date)" ng-cloak) {{date.day}} ({{date.date}})
+        option(ng-repeat="date in dates" value="{{date.date}}" ng-selected="isSelected(date.date)" ng-cloak ng-bind="date.calendar()")
 div(layout="column")
   md-input-container
       label Filtrera restaurang / mat

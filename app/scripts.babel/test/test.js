@@ -7,7 +7,8 @@ angular.module('playground').config(function($stateProvider) {
         controller: TestController,
         resolve: {
             restaurants: function(restaurant, $stateParams, date) {
-              var d = $stateParams.date || date[0].date;
+              console.log(date);
+              var d = $stateParams.date || date[0].format('L');
               return restaurant.get({datum: d});
             }
         }
@@ -20,19 +21,21 @@ function TestController($scope, $stateParams, $state, $mdDialog, restaurants, da
 
   $scope.restaurants = restaurants;
   $scope.dates = date;
-  $scope.day = $stateParams.date || $scope.dates[0].date;
+  $scope.day = $stateParams.date || $scope.dates[0].format('L');
   $scope.isSelected = isSelected;
   $scope.dateChanged = dateChanged;
   $scope.showLunchInfo = showLunchInfo;
-  
+
   function isSelected(date) {
     return $scope.day === date;
   }
-  
+
   function dateChanged() {
-    $state.go('test', {date: $scope.day});
+    console.log('Date changed')
+    console.log($scope.day);
+    $state.go('test', {date: $scope.day.format('L')});
   }
-  
+
   function showLunchInfo(lunch, event) {
     $state.go('lunchinfo', {lunch: lunch});
   }

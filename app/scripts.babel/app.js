@@ -3,16 +3,17 @@
 /* global angular */
 /*eslint semi: 2*/
 
-
 angular.module('playground', [
   'ui.router',
   'ngResource',
   'ngMaterial',
-  'pascalprecht.translate'
-]).config(function($urlRouterProvider) {
+  'pascalprecht.translate',
+])
+.config(function($urlRouterProvider) {
        $urlRouterProvider
       .otherwise('/');
-}).filter('splitnewline', function() {
+})
+.filter('splitnewline', function() {
   return function(input) {
     return input
       // .replace(/\*/g, '')
