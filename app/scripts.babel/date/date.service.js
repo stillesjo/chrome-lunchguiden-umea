@@ -29,7 +29,6 @@ function getSevenDays() {
     }
     date.add(1, 'd');
   }
-  console.log(dates);
   return dates;
 };
 }());

@@ -27,13 +27,13 @@ function TestController($scope, $stateParams, $state, $mdDialog, restaurants, da
   $scope.showLunchInfo = showLunchInfo;
 
   function isSelected(date) {
-    return $scope.day === date;
+    return $scope.day === date.format('L');
   }
 
   function dateChanged() {
     console.log('Date changed')
     console.log($scope.day);
-    $state.go('test', {date: $scope.day.format('L')});
+    $state.go('test', {date: $scope.day});
   }
 
   function showLunchInfo(lunch, event) {

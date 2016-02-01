@@ -21,11 +21,11 @@ angular.module('playground').config(function() {
             LLLL : 'dddd D MMMM YYYY HH:mm'
         },
         calendar : {
-            sameDay: '[Ixag] LT',
-            nextDay: '[Imorgon] LT',
-            lastDay: '[Igår] LT',
-            nextWeek: '[På] dddd LT',
-            lastWeek: '[I] dddd[s] LT',
+            sameDay: '[Idag]',
+            nextDay: '[Imorgon]',
+            lastDay: '[Igår]',
+            nextWeek: '[På] dddd',
+            lastWeek: '[I] dddd[s]',
             sameElse: 'L'
         },
         relativeTime : {
