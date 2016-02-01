@@ -40,7 +40,7 @@ gulp.task('lint', lint('app/scripts.babel/**/*.js', {
 
 gulp.task('inject', () => {
    return gulp.src('./app/popup.html')
-   .pipe(inject(gulp.src('scripts/**/*.js', 
+   .pipe(inject(gulp.src('scripts/**/*.js',
    {cwd: 'app'}, { read: false }, {relative: true})))
    .pipe(gulp.dest('./app'));
 });
@@ -67,7 +67,7 @@ gulp.task('jade', () => {
     gulp.src('app/scripts.babel/**/*.jade')
     .pipe(debug())
     .pipe(jade())
-    .pipe(gulp.dest('app/scripts/')) 
+    .pipe(gulp.dest('app/scripts/'))
 });
 
 gulp.task('html-do',  () => {
@@ -103,7 +103,7 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', ['babel-do', 'inject'])
+gulp.task('babel', ['babel-do', 'inject', 'wiredep'])
 
 gulp.task('babel-do', () => {
   return gulp.src('app/scripts.babel/**/*.js')
@@ -115,7 +115,7 @@ gulp.task('babel-do', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'babel', 'inject', 'wiredep', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -125,7 +125,7 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/styles/**/*',
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
-  
+
   gulp.watch('app/scripts.babel/**/*.jade', ['html']);
   gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
   gulp.watch('bower.json', ['wiredep']);

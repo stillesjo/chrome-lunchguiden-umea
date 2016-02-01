@@ -11,5 +11,5 @@ function LunchinfoState($stateProvider) {
     params: {
       lunch: null,
     }
-  })
+  });
 }

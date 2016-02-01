@@ -1,10 +1,9 @@
 'use strict';
 angular.module('playground').config(function($stateProvider) {
-    $stateProvider.state('test', {
+    $stateProvider.state('lunchlist', {
         url: '/?date',
-        // templateUrl: 'scripts/test/test.html',
-        templateUrl: chrome.extension.getURL('scripts/test/test.html'),
-        controller: TestController,
+        templateUrl: chrome.extension.getURL('scripts/lunchlist/lunchlist.html'),
+        controller: LunchlistController,
         resolve: {
             restaurants: function(restaurant, $stateParams, date) {
               var d = $stateParams.date || date[0].format('L');
@@ -16,7 +15,7 @@ angular.module('playground').config(function($stateProvider) {
 
 
 /*@ngInject*/
-function TestController($scope, $stateParams, $state, $mdDialog, restaurants, date) {
+function LunchlistController($scope, $stateParams, $state, $mdDialog, restaurants, date) {
 
   $scope.restaurants = restaurants;
   $scope.dates = date;
@@ -30,7 +29,7 @@ function TestController($scope, $stateParams, $state, $mdDialog, restaurants, da
   }
 
   function dateChanged() {
-    $state.go('test', {date: $scope.day});
+    $state.go('lunchlist', {date: $scope.day});
   }
 
   function showLunchInfo(lunch, event) {

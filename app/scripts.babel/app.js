@@ -6,8 +6,7 @@
 angular.module('playground', [
   'ui.router',
   'ngResource',
-  'ngMaterial',
-  'pascalprecht.translate',
+  'ngMaterial'
 ])
 .config(function($urlRouterProvider) {
        $urlRouterProvider
@@ -16,7 +15,6 @@ angular.module('playground', [
 .filter('splitnewline', function() {
   return function(input) {
     return input
-      // .replace(/\*/g, '')
       .replace(/<br>/g, '')
       .split('\r\n')
       .filter(Boolean);

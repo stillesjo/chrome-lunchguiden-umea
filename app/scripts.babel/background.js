@@ -5,5 +5,6 @@ chrome.runtime.onInstalled.addListener(details => {
 });
 
 chrome.tabs.onUpdated.addListener(tabId => {
-  chrome.pageAction.show(tabId);
+  // TODO Don't think this is needed
+  // chrome.pageAction.show(tabId);
 });
