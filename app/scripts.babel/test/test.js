@@ -7,7 +7,6 @@ angular.module('playground').config(function($stateProvider) {
         controller: TestController,
         resolve: {
             restaurants: function(restaurant, $stateParams, date) {
-              console.log(date);
               var d = $stateParams.date || date[0].format('L');
               return restaurant.get({datum: d});
             }
@@ -27,12 +26,10 @@ function TestController($scope, $stateParams, $state, $mdDialog, restaurants, da
   $scope.showLunchInfo = showLunchInfo;
 
   function isSelected(date) {
-    return $scope.day === date.format('L');
+    return $scope.day === date;
   }
 
   function dateChanged() {
-    console.log('Date changed')
-    console.log($scope.day);
     $state.go('test', {date: $scope.day});
   }
 
