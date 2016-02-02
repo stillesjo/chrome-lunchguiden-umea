@@ -1,14 +1,16 @@
 md-toolbar
   .md-toolbar-tools
-    h2 Umeå Lunchguiden
-    div(flex="100")
-    md-input-container
-      select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
-        option(ng-repeat="date in dates" value="{{date.format('L')}}" ng-selected="isSelected(date.format('L'))" ng-cloak ng-bind="date.calendar()")
-div(layout="column")
-  md-input-container
+    a.toolbar-link(ng-click="openSource()")
+      h2 Lunchguiden - Umeå
+    //- md-button.md-icon-button(aria-label="Info" ng-click="info()")
+    //-   md-icon(md-svg-src="/images/ic_info_outline.svg")
+div(layout="row")
+  md-input-container.md-primary.md-hue-3(flex)
       label Filtrera restaurang / mat
       input(ng-model="searchText" type="text" autofocus)
+  md-input-container(layout="column")
+    select(ng-model="day" placeholder="Selected Day" ng-change="dateChanged()")
+      option(ng-repeat="date in dates" value="{{date.format('L')}}" ng-selected="isSelected(date.format('L'))" ng-cloak ng-bind="date.calendar()")
 div(layout="row" layout-wrap)
   md-card.md-whiteframe-5dp(flex="45" ng-repeat="lunch in restaurants.lunches | filter:searchText" /*ng-click="showLunchInfo(lunch, $event)"*/)
     md-card-title(layout="row" layout-align="center center")

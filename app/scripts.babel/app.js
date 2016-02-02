@@ -12,6 +12,11 @@ angular.module('playground', [
        $urlRouterProvider
       .otherwise('/');
 })
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('teal')
+    .accentPalette('red');
+})
 .filter('splitnewline', function() {
   return function(input) {
     return input

@@ -23,6 +23,8 @@ function LunchlistController($scope, $stateParams, $state, $mdDialog, restaurant
   $scope.isSelected = isSelected;
   $scope.dateChanged = dateChanged;
   $scope.showLunchInfo = showLunchInfo;
+  $scope.info = goToInfo;
+  $scope.openSource = openSource;
 
   function isSelected(date) {
     return $scope.day === date;
@@ -34,5 +36,16 @@ function LunchlistController($scope, $stateParams, $state, $mdDialog, restaurant
 
   function showLunchInfo(lunch, event) {
     $state.go('lunchinfo', {lunch: lunch});
+  }
+
+  function goToInfo() {
+    console.log('Going to info!');
+    $state.go('info');
+  }
+
+  function openSource() {
+    chrome.tabs.create({
+      'url': 'http://mega.vk.se/lunchguiden'
+    })
   }
 }
