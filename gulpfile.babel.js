@@ -4,8 +4,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
-import inject from 'gulp-inject';
-import debug from 'gulp-debug';
 import jade from 'gulp-jade';
 import { Server as karma } from 'karma';
 
@@ -24,26 +22,6 @@ gulp.task('extras', () => {
   }).pipe(gulp.dest('dist'));
 });
 
-function lint(files, options) {
-  return () => {
-    return gulp.src(files)
-      .pipe($.eslint(options))
-      .pipe($.eslint.format());
-  };
-}
-
-gulp.task('lint', lint('app/scripts.babel/**/*.js', {
-  env: {
-    es6: true
-  }
-}));
-
-gulp.task('inject', () => {
-   return gulp.src('./app/popup.html')
-   .pipe(inject(gulp.src('scripts/**/*.js',
-   {cwd: 'app'}, { read: false }, {relative: true})))
-   .pipe(gulp.dest('./app'));
-});
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
@@ -54,23 +32,23 @@ gulp.task('images', () => {
       // as hooks for embedding and styling
       svgoPlugins: [{cleanupIDs: false}]
     }))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err);
       this.end();
     })))
     .pipe(gulp.dest('dist/images'));
 });
 
-gulp.task('html', ['jade', 'html-do']);
+gulp.task('template', ['jade', 'html']);
 
 gulp.task('jade', () => {
     gulp.src('app/scripts.babel/**/*.jade')
-    .pipe(debug())
+    //.pipe($.debug())
     .pipe(jade())
     .pipe(gulp.dest('app/scripts/'))
 });
 
-gulp.task('html-do',  () => {
+gulp.task('html',  () => {
   const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
   return gulp.src('app/*.html')
@@ -103,9 +81,12 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', ['babel-do', 'inject', 'wiredep'])
 
-gulp.task('babel-do', () => {
+// Scripts
+
+gulp.task('scripts', ['babel', 'inject', 'wiredep'])
+
+gulp.task('babel', () => {
   return gulp.src('app/scripts.babel/**/*.js')
       .pipe($.babel({
         presets: ['es2015']
@@ -113,10 +94,30 @@ gulp.task('babel-do', () => {
       .pipe(gulp.dest('app/scripts'));
 });
 
+gulp.task('inject', () => {
+   return gulp.src('./app/popup.html')
+   .pipe($.inject(gulp.src('scripts/**/*.js',
+   {cwd: 'app'}, { read: false }, {relative: true})))
+   .pipe(gulp.dest('./app'));
+});
+
+gulp.task('wiredep', () => {
+  gulp.src('app/*.html')
+    .pipe(wiredep({
+      ignorePath: /^(\.\.\/)*\.\./
+    }))
+    .pipe(gulp.dest('app'));
+});
+
+
+
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'inject', 'wiredep', 'html'], () => {
-  $.livereload.listen();
+// Watching
+
+gulp.task('watch', ['scripts', 'inject', 'wiredep', 'template'], () => {
+  $.livereload.listen({quiet: true});
 
   gulp.watch([
     'app/*.html',
@@ -124,12 +125,19 @@ gulp.task('watch', ['lint', 'babel', 'inject', 'wiredep', 'html'], () => {
     'app/images/**/*',
     'app/styles/**/*',
     'app/_locales/**/*.json'
-  ]).on('change', $.livereload.reload);
+  ])
+    .on('change', $.livereload.reload)
+    .on('error', swallowError);
 
-  gulp.watch('app/scripts.babel/**/*.jade', ['html']);
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
-  gulp.watch('bower.json', ['wiredep']);
+  gulp.watch('app/scripts.babel/**/*.jade', ['template'])
+    .on('error', swallowError);
+  gulp.watch('app/scripts.babel/**/*.js', ['babel', 'inject', 'wiredep'])
+    .on('error', swallowError);
+  gulp.watch('bower.json', ['wiredep'])
+    .on('error', swallowError);
 });
+
+// Test
 
 gulp.task('inject-karma', () => {
   gulp.src('./karma.conf.js')
@@ -141,7 +149,7 @@ gulp.task('inject-karma', () => {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('test', ['lint', 'babel'], (done) => {
+gulp.task('test', ['scripts'], (done) => {
   new karma({
     configFile: __dirname('/karma.conf.js'),
     singleRun: true
@@ -152,15 +160,7 @@ gulp.task('size', () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
-gulp.task('wiredep', () => {
-  gulp.src('app/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'));
-});
-
-gulp.task('package', function () {
+gulp.task('package', function() {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/*')
       .pipe($.zip('temp-' + manifest.version + '.zip'))
@@ -169,7 +169,7 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
+    'scripts', 'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
 });
@@ -177,3 +177,8 @@ gulp.task('build', (cb) => {
 gulp.task('default', ['clean'], cb => {
   runSequence('build', cb);
 });
+
+function swallowError(error) {
+  console.log(error.toString());
+  this.emit('end');
+}

@@ -17,35 +17,27 @@ angular.module('playground').config(function($stateProvider) {
 /*@ngInject*/
 function LunchlistController($scope, $stateParams, $state, $mdDialog, restaurants, date) {
 
+  // Data
   $scope.restaurants = restaurants;
   $scope.dates = date;
   $scope.day = $stateParams.date || $scope.dates[0].format('L');
+
+  // Functions
   $scope.isSelected = isSelected;
   $scope.dateChanged = dateChanged;
   $scope.showLunchInfo = showLunchInfo;
   $scope.info = goToInfo;
-  $scope.openSource = openSource;
+  $scope.openLunchguiden = openLunchguiden;
 
-  function isSelected(date) {
-    return $scope.day === date;
-  }
+  function isSelected(date) { return $scope.day === date; }
 
-  function dateChanged() {
-    $state.go('lunchlist', {date: $scope.day});
-  }
+  function dateChanged() { $state.go('lunchlist', {date: $scope.day}); }
 
-  function showLunchInfo(lunch, event) {
-    $state.go('lunchinfo', {lunch: lunch});
-  }
+  function showLunchInfo(lunch, event) { $state.go('lunchinfo', {lunch: lunch}); }
 
-  function goToInfo() {
-    console.log('Going to info!');
-    $state.go('info');
-  }
+  function goToInfo() { $state.go('info'); }
 
-  function openSource() {
-    chrome.tabs.create({
-      'url': 'http://mega.vk.se/lunchguiden'
-    })
+  function openLunchguiden() {
+    chrome.tabs.create({ 'url': 'http://mega.vk.se/lunchguiden' });
   }
 }
