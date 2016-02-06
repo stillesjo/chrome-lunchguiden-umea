@@ -16,6 +16,8 @@
   },
   "permissions": [
     "background",
+    "notifications",
+    "alarms",
     "activeTab",
     "http://mega.vk.se/lunchguiden/export/lunchlist.php"
   ],
@@ -27,6 +29,7 @@
     "default_title": "temp",
     "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "web_accessible_resources" :[
       "scripts/**/*.html",
       "styles/**/*.css"

@@ -1,19 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <title>Lunchguiden options</title>
     <!-- build:css styles/popup-vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
+
   </head>
-  <body ng-app="playground">
-    <div ui-view>
-    </div>
+
+  <body ng-app="playground-options">
+
+    <div ui-view></div>
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
@@ -29,22 +31,11 @@
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
     <!-- build:js scripts/popup.js -->
     <!-- inject:js -->
-    <script src="/scripts/app.js"></script>
-    <script src="/scripts/background.js"></script>
-    <script src="/scripts/chromereload.js"></script>
-    <script src="/scripts/options.js"></script>
-    <script src="/scripts/date/date.service.js"></script>
-    <script src="/scripts/date/locale.sv.js"></script>
-    <script src="/scripts/info/info.js"></script>
-    <script src="/scripts/lunchinfo/lunchinfo.controller.js"></script>
-    <script src="/scripts/lunchinfo/lunchinfo.js"></script>
-    <script src="/scripts/lunchlist/lunchlist.js"></script>
-    <script src="/scripts/otherstate/otherstate.js"></script>
-    <script src="/scripts/restaurant/restaurant.service.js"></script>
+    <script src="/scripts/options/options.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
+
   </body>
 </html>

@@ -94,9 +94,17 @@ gulp.task('babel', () => {
       .pipe(gulp.dest('app/scripts'));
 });
 
-gulp.task('inject', () => {
+gulp.task('inject-options', () => {
+  return gulp.src('./app/options.html')
+    .pipe($.inject(gulp.src('scripts/options/**/*.js',
+    {cwd: 'app'}, { read: false }, { relative: true })))
+    .pipe(gulp.dest('./app'));
+
+})
+
+gulp.task('inject', ['inject-options'], () => {
    return gulp.src('./app/popup.html')
-   .pipe($.inject(gulp.src('scripts/**/*.js',
+   .pipe($.inject(gulp.src(['scripts/**/*.js', '!scripts/options/**/*'],
    {cwd: 'app'}, { read: false }, {relative: true})))
    .pipe(gulp.dest('./app'));
 });
