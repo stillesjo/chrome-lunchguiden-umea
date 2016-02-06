@@ -3,6 +3,7 @@
 angular.module('playground-options',[
   'ui.router',
   'ngMaterial',
+  'LocalStorageModule'
 ]).config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
  .otherwise('/');
@@ -20,6 +21,16 @@ angular.module('playground-options',[
 
 
 /* @ngInject */
-function OptionsController($scope) {
+function OptionsController($scope, $mdToast) {
+  $scope.apply = apply;
+  chrome.storage.sync.get("reminder", function(result) {
+    $scope.reminder = result.reminder;
+  })
 
+  function apply() {
+    chrome.storage.sync.set({reminder: $scope.reminder},
+      function() {
+        $mdToast.show($mdToast.simple({textContent: 'Saved!'}));
+      });
+  }
 }

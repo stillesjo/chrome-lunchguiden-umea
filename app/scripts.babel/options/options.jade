@@ -1,6 +1,7 @@
 md-toolbar
   .md-toolbar-tools
     h2 Lunchguiden alternativ
+    div(flex)
 md-content.md-primary(layout="column" layout-align="center center" flex)
   md-switch(ng-model="reminder") Påminnelse om lunch
-  
+  md-button(ng-click="apply()") Spara  

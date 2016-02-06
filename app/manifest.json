@@ -19,6 +19,7 @@
     "notifications",
     "alarms",
     "activeTab",
+    "storage",
     "http://mega.vk.se/lunchguiden/export/lunchlist.php"
   ],
   "browser_action": {

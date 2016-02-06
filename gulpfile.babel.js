@@ -102,7 +102,11 @@ gulp.task('inject-options', () => {
 
 })
 
-gulp.task('inject', ['inject-options'], () => {
+gulp.task('inject', (cb) => {
+  runSequence('inject-popup', 'inject-options', cb);
+});
+
+gulp.task('inject-popup', () => {
    return gulp.src('./app/popup.html')
    .pipe($.inject(gulp.src(['scripts/**/*.js', '!scripts/options/**/*'],
    {cwd: 'app'}, { read: false }, {relative: true})))
