@@ -14,7 +14,7 @@ bower install
 
 # Run gulp watch
 gulp watch
-´´´
+```
 
 ## Contributing
 Feel free to write issues and create pull requests for anything you want!
