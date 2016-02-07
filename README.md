@@ -17,7 +17,7 @@ gulp watch
 ```
 
 ## Contributing
-Feel free to write issues and create pull requests for anything you want!
+Feel free to write issues and create pull requests.
 
 ## Licsense
 [MIT License](LICENSE.md)
