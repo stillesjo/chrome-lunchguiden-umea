@@ -18,19 +18,19 @@ gulp.task('extras', () => {
     '!app/*.html',
   ], {
     base: 'app',
-    dot: true
+    dot: true,
   }).pipe(gulp.dest('dist'));
 });
-
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
     .pipe($.if($.if.isFile, $.cache($.imagemin({
       progressive: true,
       interlaced: true,
+
       // don't remove IDs from SVGs, they are often used
       // as hooks for embedding and styling
-      svgoPlugins: [{cleanupIDs: false}]
+      svgoPlugins: [{ cleanupIDs: false }],
     }))
     .on('error', function(err) {
       console.log(err);
@@ -42,10 +42,10 @@ gulp.task('images', () => {
 gulp.task('template', ['jade', 'html']);
 
 gulp.task('jade', () => {
-    gulp.src('app/scripts.babel/**/*.jade')
-    //.pipe($.debug())
-    .pipe(jade())
-    .pipe(gulp.dest('app/scripts/'))
+  gulp.src('app/scripts.babel/**/*.jade')
+  //.pipe($.debug())
+  .pipe(jade())
+  .pipe(gulp.dest('app/scripts/'))
 });
 
 gulp.task('html',  () => {
