@@ -1,7 +1,7 @@
 md-toolbar
   .md-toolbar-tools
     a.toolbar-link(ng-click="openLunchguiden()")
-      h2 Lunchguiden - Umeå
+      h2(ng-bind="::appname")
     //- md-button.md-icon-button(aria-label="Info" ng-click="info()")
     //-   md-icon(md-svg-src="/images/ic_info_outline.svg")
 div(layout="row")
