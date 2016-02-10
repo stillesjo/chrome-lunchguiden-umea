@@ -6,11 +6,6 @@
 (function() {
 
 angular.module('playground').factory('date', function() {
-  return getSevenDays();
-
-});
-
-function getSevenDays() {
   var date = moment();
   var dates = [];
   for (var i = 0; dates.length < 7; ++i) {
@@ -21,5 +16,6 @@ function getSevenDays() {
     date.add(1, 'd');
   }
   return dates;
-};
+});
+
 }());
