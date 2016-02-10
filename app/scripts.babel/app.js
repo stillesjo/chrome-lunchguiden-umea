@@ -6,11 +6,11 @@
 angular.module('playground', [
   'ui.router',
   'ngResource',
-  'ngMaterial'
+  'ngMaterial',
 ])
 .config(function($urlRouterProvider) {
-       $urlRouterProvider
-      .otherwise('/');
+  $urlRouterProvider
+  .otherwise('/');
 })
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')

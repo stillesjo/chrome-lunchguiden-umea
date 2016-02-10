@@ -58,6 +58,5 @@ angular.module('playground').config(function() {
             doy: 4  // The week that contains Jan 4th is the first week of the year.
         }
     });
-
-    moment.locale('sv');
+    moment.locale(chrome.i18n.getUILanguage());
 })
