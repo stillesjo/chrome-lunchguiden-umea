@@ -39,11 +39,12 @@ gulp.task('images', () => {
     .pipe(gulp.dest('dist/images'));
 });
 
-gulp.task('template', ['jade', 'html']);
+gulp.task('template', () => {
+  runSequence('jade', 'html');
+});
 
 gulp.task('jade', () => {
-  gulp.src('app/scripts.babel/**/*.jade')
-  //.pipe($.debug())
+  return gulp.src('app/scripts.babel/**/*.jade')
   .pipe(jade())
   .pipe(gulp.dest('app/scripts/'))
 });
@@ -51,10 +52,10 @@ gulp.task('jade', () => {
 gulp.task('html',  () => {
   const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
-  return gulp.src('app/*.html')
+  return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.sourcemaps.init())
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify({beautify: false, mangle: false})))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe($.sourcemaps.write())
     .pipe(assets.restore())
@@ -85,6 +86,7 @@ gulp.task('babel', () => {
       .pipe($.babel({
         presets: ['es2015']
       }))
+      .pipe($.ngAnnotate())
       .pipe(gulp.dest('app/scripts'));
 });
 
@@ -122,7 +124,7 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watching
 
-gulp.task('watch', ['scripts', 'inject', 'wiredep', 'template'], () => {
+gulp.task('watch', ['scripts', 'inject', 'wiredep', 'jade'], () => {
   $.livereload.listen({quiet: true});
 
   gulp.watch([
@@ -168,15 +170,16 @@ gulp.task('size', () => {
 
 gulp.task('package', function() {
   var manifest = require('./dist/manifest.json');
-  return gulp.src('dist/*')
-      .pipe($.zip('temp-' + manifest.version + '.zip'))
+  return gulp.src('dist/**/*')
+      .pipe($.debug())
+      .pipe($.zip('lunchguideumea-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
 });
 
 gulp.task('build', (cb) => {
   runSequence(
     'scripts', 'chromeManifest',
-    ['html', 'images', 'extras'],
+    ['template', 'images', 'extras'],
     'size', cb);
 });
 
