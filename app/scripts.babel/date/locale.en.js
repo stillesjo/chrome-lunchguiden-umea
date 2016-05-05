@@ -4,7 +4,7 @@
 //! modified by : Alexander Stillesjo : https://github.com/stillesjo
 'use strict';
 
-angular.module('playground').config(function() {
+angular.module('lunchguideUmea').config(function() {
 
     moment.defineLocale('en', {
       calendar: {

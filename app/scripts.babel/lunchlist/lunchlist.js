@@ -1,7 +1,7 @@
 'use strict';
 
 /* @ngInject */
-angular.module('playground').config(function($stateProvider) {
+angular.module('lunchguideUmea').config(function($stateProvider) {
     $stateProvider.state('lunchlist', {
         url: '/?date',
         templateUrl: chrome.extension.getURL('scripts/lunchlist/lunchlist.html'),

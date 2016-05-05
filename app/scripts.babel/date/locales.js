@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  angular.module('playground').config(function() {
+  angular.module('lunchguideUmea').config(function() {
     moment.locale(chrome.i18n.getUILanguage());
   })
 })()

@@ -3,7 +3,7 @@
 /* global angular */
 /*eslint semi: 2*/
 
-angular.module('playground', [
+angular.module('lunchguideUmea', [
   'ui.router',
   'ngResource',
   'ngMaterial',

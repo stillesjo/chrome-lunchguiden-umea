@@ -5,7 +5,7 @@
 /*@ngInject*/
 (function() {
 
-angular.module('playground').factory('date', function() {
+angular.module('lunchguideUmea').factory('date', function() {
   var date = moment();
   var dates = [];
   for (var i = 0; dates.length < 7; ++i) {

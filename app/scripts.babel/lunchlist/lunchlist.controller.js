@@ -1,7 +1,7 @@
 'use strict';
 
 /* @ngInject */
-angular.module('playground').controller('LunchlistController',
+angular.module('lunchguideUmea').controller('LunchlistController',
     function($scope, $stateParams, $state, $mdDialog, restaurants, date) {
 
   // Data
