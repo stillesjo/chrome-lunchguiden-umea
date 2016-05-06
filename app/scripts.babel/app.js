@@ -13,8 +13,9 @@ angular.module('lunchguideUmea', [
   .otherwise('/');
 })
 .config(function($mdThemingProvider) {
+  // VK-blue = #007bc4
   $mdThemingProvider.theme('default')
-    .primaryPalette('teal')
+    .primaryPalette('blue')
     .accentPalette('red');
 })
 .filter('splitnewline', function() {

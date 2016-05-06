@@ -1,31 +1,38 @@
 'use strict';
 
-/* @ngInject */
-angular.module('lunchguideUmea').controller('LunchlistController',
-    function($scope, $stateParams, $state, $mdDialog, restaurants, date) {
+(function() {
 
-  // Data
-  $scope.restaurants = restaurants;
-  $scope.dates = date;
-  $scope.day = $stateParams.date || $scope.dates[0].format('L');
-  $scope.appname = chrome.i18n.getMessage('appName')
+  /* @ngInject */
+  function LunchlistController($scope, $stateParams, $state, $mdDialog, restaurants, date) {
 
-  // Functions
-  $scope.isSelected = isSelected;
-  $scope.dateChanged = dateChanged;
-  $scope.showLunchInfo = showLunchInfo;
-  $scope.info = goToInfo;
-  $scope.openLunchguiden = openLunchguiden;
+    // Data
+    $scope.restaurants = restaurants;
+    $scope.dates = date;
+    $scope.day = $stateParams.date || $scope.dates[0].format('L');
+    $scope.appname = chrome.i18n.getMessage('appName')
 
-  function isSelected(date) { return $scope.day === date; }
+    // Functions
+    $scope.isSelected = isSelected;
+    $scope.dateChanged = dateChanged;
+    $scope.showLunchInfo = showLunchInfo;
+    $scope.info = goToInfo;
+    $scope.openLunchguiden = openLunchguiden;
 
-  function dateChanged() { $state.go('lunchlist', {date: $scope.day}); }
+    function isSelected(date) { return $scope.day === date; }
 
-  function showLunchInfo(lunch, event) { $state.go('lunchinfo', {lunch: lunch}); }
+    function dateChanged() { $state.go('lunchlist', {date: $scope.day}); }
 
-  function goToInfo() { $state.go('info'); }
+    function showLunchInfo(lunch, event) { $state.go('lunchinfo', {lunch: lunch}); }
 
-  function openLunchguiden() {
-    chrome.tabs.create({ 'url': 'http://mega.vk.se/lunchguiden' });
+    function goToInfo() { $state.go('info'); }
+
+    function openLunchguiden() {
+      chrome.tabs.create({ 'url': 'http://mega.vk.se/lunchguiden' });
+    }
   }
-})
+
+  angular
+    .module('lunchguideUmea')
+    .controller('LunchlistController', LunchlistController);
+
+})();
