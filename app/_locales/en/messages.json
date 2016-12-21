@@ -3,6 +3,9 @@
     "message": "The Umeå Lunch Guide",
     "description": "Guide for restaurants serving lunch around the city of Umeå"
   },
+  "filterMessage": {
+    "message": "Filter restaurant / food"
+  },
   "appDescription": {
     "message": "The unofficial Lunch Guiden chrome extension",
     "description": "Lists the lunches for restaurants around the city of Umeå"

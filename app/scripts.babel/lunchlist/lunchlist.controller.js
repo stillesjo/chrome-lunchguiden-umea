@@ -9,7 +9,6 @@
     $scope.restaurants = restaurants;
     $scope.dates = date;
     $scope.day = $stateParams.date || $scope.dates[0].format('L');
-    $scope.appname = chrome.i18n.getMessage('appName')
 
     // Functions
     $scope.isSelected = isSelected;

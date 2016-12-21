@@ -25,4 +25,12 @@ angular.module('lunchguideUmea', [
       .split('\r\n')
       .filter(Boolean);
   };
+})
+.filter('translate', function() {
+  return function(input) {
+    const message = chrome.i18n.getMessage(input);
+    console.log(input);
+    console.log(message);
+    return message || input;
+  }
 });

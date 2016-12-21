@@ -3,6 +3,9 @@
     "message": "Lunchguiden i Umeå",
     "description": "Guide för luncher i Umeå"
   },
+  "filterMessage": {
+    "message": "Filtrera restaurang / mat"
+  },
   "appDescription": {
     "message": "Det inofficiella lunchguide-chrometillägget.",
     "description": "Ger en lista på luncher runtom i Umeå. Kan även byta dag"

@@ -1,10 +1,10 @@
 md-toolbar
   .md-toolbar-tools
     a.toolbar-link(ng-click="openLunchguiden()")
-      h2(ng-bind="::appname")
+      h2(ng-bind="'appName' | translate")
 div(layout="row")
   md-input-container.md-primary.md-hue-3(flex)
-      label Filtrera restaurang / mat
+      label(ng-bind="'filterMessage' | translate")
       input(ng-model="searchText" type="text" autofocus)
   md-input-container(layout="column")
     md-select(ng-model="day" placeholder="Selected day" ng-change="dateChanged()")
